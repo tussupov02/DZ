@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Страница с подключениями</title>
+</head>
+<body>
+  <h1>Список подключений</h1>
+  <ul id="connections"></ul>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+const connectionsList = document.getElementById('connections');
+socket.on('connections', (connections) => {
+
+  connectionsList.innerHTML = '';
+
+  connections.forEach((connection) => {
+    const connectionItem = document.createElement('li');
+    connectionItem.textContent = connection;
+    connectionItem.addEventListener('click', () => {
+      const message = prompt('Введите сообщение:');
+      socket.emit('message', message, connection);
+      socket.on('message', (message)=>{
+        messages.forEach((message) => {
+          const connectionItem = document.createElement('li');
+          connectionItem.textContent = message;
+          connectionsList.appendChild(connectionItem)
+        })
+      })
+    });
+    connectionsList.appendChild(connectionItem);
+  });
+});
+
+  </script>
+</body>
+</html>
