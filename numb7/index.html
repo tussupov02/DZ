@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ПРИМИТЕ ДЗ</title>
+
+</head>
+<body>
+  <h1>Список подключений</h1>
+  <ul id="connections"></ul>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('connections', (connections) => {
+      const connectionsList = document.getElementById('connections');
+      while (connectionsList.firstChild) {
+        connectionsList.firstChild.remove();
+      }
+
+      connections.forEach((connection) => {
+        const connectionItem = document.createElement('li');
+        connectionItem.textContent = connection;
+        connectionsList.appendChild(connectionItem);
+      });
+    });
+  </script>
+</body>
+</html>
